@@ -35,7 +35,25 @@ The central question is whether pretrained contextual representations improve **
 
 **Observed difference:** DistilBERT achieves **+11.97 percentage points** in entity F1 over BiLSTM in the original saved notebook outputs.
 
-> **Reproducibility status:** These figures were extracted from the original notebook's saved outputs. They have **not yet been independently reproduced by rerunning the complete training pipeline**. This repository is being prepared for a clean, documented rerun; please do not interpret the table as a verified reproduction.
+> **Provenance:** These are historical values from the original notebook, not the results of the new Colab execution documented below.
+
+## New full-dataset Colab execution (October 2026)
+
+These are **newly recorded test-set results**, not the original notebook's saved figures. Both runs used the complete local dataset (14,041 train / 3,250 validation / 3,453 test sentences), seed 42, and a Tesla T4 GPU.
+
+| Test-set metric | BiLSTM | DistilBERT |
+| --- | ---: | ---: |
+| Token accuracy | 92.70% | 96.36% |
+| Entity precision | 67.41% | 83.22% |
+| Entity recall | 72.66% | 88.51% |
+| **Entity F1** | **69.94%** | **85.78%** |
+| Epochs | 10 | 3 |
+
+DistilBERT exceeded BiLSTM by **15.84 percentage points** in entity F1 in this run. The original notebook reports 74.19% (BiLSTM) and 86.16% (DistilBERT); those historical results are **not identical** to the new runs. In particular, the BiLSTM difference needs methodological scrutiny before claiming faithful reproduction.
+
+**Execution evidence:** [BiLSTM JSON](results/bilstm.json) · [DistilBERT JSON](results/distilbert.json) · [Environment manifest](results/reproduction_environment.json). These files contain aggregate metrics and training history, not the restricted dataset or model weights. They are evidence of the reported execution, not proof that every methodological choice is correct.
+
+**Verification still pending:** review the original notebook against the extracted pipeline for BIO label alignment, ignored subwords, entity-level evaluation and training/test separation. Full end-to-end training has not been independently rerun by the repository maintainer in a second environment.
 
 ## Dataset and access
 
@@ -106,7 +124,7 @@ Python · PyTorch · Hugging Face Transformers · sequence labeling · entity-le
 
 ---
 
-**Current status:** Documentation and reproducibility improvements in progress. The source code and tests will be added after validation.
+**Current status:** Full-dataset Colab result artifacts recorded. Methodological audit and notebook publication are still pending.
 
 
 For a full-dataset reproduction protocol and comparison against the saved notebook metrics, see [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
