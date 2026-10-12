@@ -218,3 +218,23 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project-specific: restricted CoNLL-2003 data (never commit)
+data/raw/
+data/processed/
+conll03-iob-pos.json
+conll03-iob-pos.json.gz
+
+# Model checkpoints and experiment outputs
+checkpoints/
+outputs/
+runs/
+wandb/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.h5
+
+# Local notebooks and private notes
+.ipynb_checkpoints/
