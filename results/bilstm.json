@@ -1,0 +1,110 @@
+{
+  "model": "bilstm",
+  "checkpoint": "distilbert-base-cased",
+  "seed": 42,
+  "epochs": 10,
+  "learning_rate": 0.0005,
+  "batch_size": 32,
+  "device": "cuda",
+  "split_counts": {
+    "train": 14041,
+    "valid": 3250,
+    "test": 3453
+  },
+  "sample_limits": {
+    "train": null,
+    "valid": null,
+    "test": null
+  },
+  "validation_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.6612108176009802,
+      "validation": {
+        "loss": 0.371778312212258,
+        "token_accuracy": 0.8821598869723907
+      }
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.3283512331290777,
+      "validation": {
+        "loss": 0.2762536212263227,
+        "token_accuracy": 0.9139194678283393
+      }
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.23358445809751002,
+      "validation": {
+        "loss": 0.2204117704475043,
+        "token_accuracy": 0.930608700771178
+      }
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.1787454928260865,
+      "validation": {
+        "loss": 0.20228812819593311,
+        "token_accuracy": 0.9394978512980514
+      }
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.14507756535820918,
+      "validation": {
+        "loss": 0.18675257650423138,
+        "token_accuracy": 0.9433537410961323
+      }
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.11822492435812136,
+      "validation": {
+        "loss": 0.18738754397068702,
+        "token_accuracy": 0.946105845646671
+      }
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.09811330304941447,
+      "validation": {
+        "loss": 0.17452163784479374,
+        "token_accuracy": 0.948225113321952
+      }
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.0839857993422581,
+      "validation": {
+        "loss": 0.18225782924598796,
+        "token_accuracy": 0.951374580561606
+      }
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.07210559859990666,
+      "validation": {
+        "loss": 0.1892592844992132,
+        "token_accuracy": 0.951639489021016
+      }
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.0646384894542379,
+      "validation": {
+        "loss": 0.1887558112049352,
+        "token_accuracy": 0.9504621180903043
+      }
+    }
+  ],
+  "test": {
+    "loss": 0.3308727760320633,
+    "token_accuracy": 0.9270260474937363
+  },
+  "test_entities": {
+    "precision": 0.6741130091984231,
+    "recall": 0.726628895184136,
+    "f1": 0.6993865030674846
+  }
+}
