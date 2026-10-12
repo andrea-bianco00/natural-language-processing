@@ -59,7 +59,7 @@ DistilBERT exceeded BiLSTM by **15.84 percentage points** in entity F1 in this r
 
 The experiments use **CoNLL-2003**, with 14,041 training sentences, 3,250 validation sentences, and 3,453 test sentences in the original project archive.
 
-**The dataset files are not included in this repository.** CoNLL-2003 contains Reuters-derived text subject to redistribution restrictions. Users must obtain the data through an authorized source and follow the applicable terms. Dataset placement and validation instructions will be added with the reproducible pipeline.
+**The dataset files are not included in this repository.** CoNLL-2003 contains Reuters-derived text subject to redistribution restrictions. Users must obtain the data through an authorized source and follow the applicable terms. See [REPRODUCIBILITY.md](REPRODUCIBILITY.md) for dataset placement and validation instructions.
 
 ## Code and current verification status
 
@@ -77,7 +77,7 @@ The original notebook has been split into focused Python modules:
 python -m unittest discover -s tests -v
 ```
 
-The earlier Colab session reported 13 passing tests. Additional methodology tests have since been added, but the expanded suite has **not yet been independently verified in a fresh environment**. The complete command-line runner is present and has produced the recorded Colab artifacts; the notebook revision still needs its own end-to-end rerun.
+The GitHub Actions workflow runs offline unit tests, Python compilation, and notebook format/syntax validation on pushes to `main`. A passing workflow does **not** execute full-dataset training. The command-line runner produced the recorded Colab artifacts; the committed notebook revision still needs its own end-to-end rerun.
 
 ## Running the extracted experiment
 
@@ -88,7 +88,7 @@ From the repository root, with Python 3.10 or 3.11:
 ```bash
 python -m venv .venv
 # Windows PowerShell:
-.venv\\Scripts\\Activate.ps1
+.venv\Scripts\Activate.ps1
 # macOS/Linux: source .venv/bin/activate
 python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
@@ -122,7 +122,7 @@ Python · PyTorch · Hugging Face Transformers · sequence labeling · entity-le
 
 ---
 
-**Current status:** Full-dataset Colab result artifacts recorded. Methodological audit and notebook publication are still pending.
+**Current status:** Full-dataset Colab result artifacts recorded; methodology audit and clean notebook are published in this repository. Independent end-to-end execution of the committed notebook and canonical word-level NER evaluation remain future work.
 
 
 For a full-dataset reproduction protocol and comparison against the saved notebook metrics, see [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
