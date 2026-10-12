@@ -38,3 +38,36 @@ jobs:
                   assert not cell.outputs, "Committed notebook has execution outputs"
           print(f"Validated {len(nb.cells)} notebook cells")
           PY
+      - name: Audit tracked files before public release
+        run: |
+          python - <<'PY'
+          import pathlib
+          import subprocess
+          import sys
+
+          paths = subprocess.check_output(["git", "ls-files", "-z"]).decode().split("\0")
+          paths = sorted(path for path in paths if path)
+          forbidden_names = {
+              "project.zip", "conll03-iob-pos.json", "conll03-iob-pos.json.gz",
+              ".env", ".env.local", ".env.production", "id_rsa", "id_ed25519",
+          }
+          forbidden_suffixes = (".pt", ".pth", ".ckpt", ".safetensors", ".pem", ".key")
+          forbidden_dirs = ("data/raw/", "data/processed/", "checkpoints/", "outputs/", "wandb/")
+          violations = []
+          print(f"Tracked files: {len(paths)}")
+          for path in paths:
+              normalized = path.lower().replace("\\", "/")
+              size = pathlib.Path(path).stat().st_size
+              print(f"{path} ({size} bytes)")
+              name = pathlib.PurePosixPath(normalized).name
+              if (
+                  name in forbidden_names
+                  or normalized.endswith(forbidden_suffixes)
+                  or any(normalized.startswith(prefix) for prefix in forbidden_dirs)
+              ):
+                  violations.append(path)
+          if violations:
+              print("Restricted or sensitive tracked paths:", *violations, sep="\n - ", file=sys.stderr)
+              sys.exit(1)
+          print("Tracked-file path audit passed. This does not replace manual content review.")
+          PY
