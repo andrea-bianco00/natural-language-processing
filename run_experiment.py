@@ -11,10 +11,19 @@ def main():
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--epochs", type=int, default=None, help="Override training epochs for smoke tests")
+    parser.add_argument("--max-train-samples", type=int, default=None, help="Limit training examples for a quick check")
+    parser.add_argument("--max-valid-samples", type=int, default=None, help="Limit validation examples for a quick check")
+    parser.add_argument("--max-test-samples", type=int, default=None, help="Limit test examples for a quick check")
     parser.add_argument("--output", type=Path, default=None)
     args = parser.parse_args()
     if args.batch_size <= 0:
         parser.error("batch size must be positive")
+    if args.epochs is not None and args.epochs <= 0:
+        parser.error("epochs must be positive")
+    for limit in (args.max_train_samples, args.max_valid_samples, args.max_test_samples):
+        if limit is not None and limit <= 0:
+            parser.error("sample limits must be positive")
     if args.output is None:
         args.output = Path("outputs") / f"{args.model}.json"
 
@@ -36,7 +45,9 @@ def main():
     collate = partial(collate_batch, pad_token_id=tokenizer.pad_token_id)
     loaders = {}
     for split in ("train", "valid", "test"):
-        examples = encode_split(data[split], tokenizer)
+        limit = getattr(args, f"max_{split}_samples")
+        samples = data[split][:limit] if limit is not None else data[split]
+        examples = encode_split(samples, tokenizer)
         loaders[split] = DataLoader(
             NERDataset(examples), batch_size=args.batch_size,
             shuffle=split == "train", collate_fn=collate,
@@ -50,6 +61,8 @@ def main():
     else:
         model = BERTNER(checkpoint, num_labels=len(ID_TO_TAG), dropout=0.3)
         epochs, lr = 3, 1e-5
+    if args.epochs is not None:
+        epochs = args.epochs
     model.to(device)
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
     history = []
@@ -66,6 +79,7 @@ def main():
         "model": args.model, "checkpoint": checkpoint, "seed": args.seed,
         "epochs": epochs, "learning_rate": lr, "batch_size": args.batch_size,
         "device": str(device), "split_counts": counts,
+        "sample_limits": {split: getattr(args, f"max_{split}_samples") for split in ("train", "valid", "test")},
         "validation_history": history, "test": test, "test_entities": entities,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
