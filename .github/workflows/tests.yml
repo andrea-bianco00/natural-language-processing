@@ -1,4 +1,4 @@
-name: Python smoke tests
+name: Python tests and notebook validation
 
 on:
   push:
@@ -15,10 +15,26 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: pip
-      - name: Install dependencies
-        run: python -m pip install -r requirements.txt
+      - name: Install offline test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "numpy>=1.24,<3" "torch>=2.1,<3" "nbformat>=5,<6"
       - name: Check Python syntax
-        run: python -m compileall -q src tests run_experiment.py
+        run: python -m compileall -q src tests run_experiment.py compare_results.py
       - name: Run offline unit tests
         run: python -m unittest discover -s tests -v
+      - name: Validate Colab notebook structure and syntax
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          import nbformat
+          path = Path("notebooks/ENSAI_NER_Colab_Reproduction.ipynb")
+          nb = nbformat.read(path, as_version=4)
+          nbformat.validate(nb)
+          for index, cell in enumerate(nb.cells, 1):
+              if cell.cell_type == "code":
+                  ast.parse(cell.source, filename=f"{path}:cell-{index}")
+                  assert not cell.outputs, "Committed notebook has execution outputs"
+          print(f"Validated {len(nb.cells)} notebook cells")
+          PY
