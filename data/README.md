@@ -6,7 +6,13 @@ This project uses the **CoNLL-2003 English Named Entity Recognition** benchmark.
 
 The original ENSAI project used a JSON (or gzip-compressed JSON) file with three top-level keys: `train`, `valid`, and `test`. Each split is a list of sentence records with `tokens` and `tags` fields. The original archive contained 14,041 training sentences, 3,250 validation sentences, and 3,453 test sentences.
 
-The cleaned data loader and an input validation command will be added in the next development stage. Until then, **do not assume that an arbitrary CoNLL-2003 download has the exact JSON format expected by the original notebook**.
+The cleaned data loader is implemented in [`src/validate_data.py`](../src/validate_data.py). Validate the authorized original file with:
+
+```bash
+python -m src.validate_data data/raw/conll03-iob-pos.json.gz --original-split-counts
+```
+
+**Do not assume that an arbitrary CoNLL-2003 download has the exact JSON format expected by this repository.**
 
 For local work, place authorized source data under `data/raw/`; this directory is excluded by `.gitignore`.
 
