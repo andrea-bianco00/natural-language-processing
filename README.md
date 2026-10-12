@@ -53,7 +53,7 @@ DistilBERT exceeded BiLSTM by **15.84 percentage points** in entity F1 in this r
 
 **Execution evidence:** [BiLSTM JSON](results/bilstm.json) · [DistilBERT JSON](results/distilbert.json) · [Environment manifest](results/reproduction_environment.json). These files contain aggregate metrics and training history, not the restricted dataset or model weights. They are evidence of the reported execution, not proof that every methodological choice is correct.
 
-**Verification still pending:** review the original notebook against the extracted pipeline for BIO label alignment, ignored subwords, entity-level evaluation and training/test separation. Full end-to-end training has not been independently rerun by the repository maintainer in a second environment.
+**Methodology audit:** Source-level checks of BIO alignment, ignored labels and seqeval evaluation are documented in [METHODOLOGY_AUDIT.md](METHODOLOGY_AUDIT.md). The original data contain identical token sequences across splits, and reported entity F1 is measured on subword-expanded tags. A clean independent end-to-end rerun and word-level evaluation remain open.
 
 ## Dataset and access
 
