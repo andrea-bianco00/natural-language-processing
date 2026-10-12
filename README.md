@@ -107,3 +107,6 @@ Python · PyTorch · Hugging Face Transformers · sequence labeling · entity-le
 ---
 
 **Current status:** Documentation and reproducibility improvements in progress. The source code and tests will be added after validation.
+
+
+For a full-dataset reproduction protocol and comparison against the saved notebook metrics, see [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
