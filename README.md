@@ -43,6 +43,24 @@ The experiments use **CoNLL-2003**, with 14,041 training sentences, 3,250 valida
 
 **The dataset files are not included in this repository.** CoNLL-2003 contains Reuters-derived text subject to redistribution restrictions. Users must obtain the data through an authorized source and follow the applicable terms. Dataset placement and validation instructions will be added with the reproducible pipeline.
 
+## Code and current verification status
+
+The original notebook has been split into focused Python modules:
+
+- [`src/preprocessing.py`](src/preprocessing.py): subword IOB alignment, datasets and dynamic padding.
+- [`src/models.py`](src/models.py): the BiLSTM and pretrained DistilBERT architectures.
+- [`src/training.py`](src/training.py): device-safe training, token accuracy and entity-level metrics.
+- [`tests/test_pipeline.py`](tests/test_pipeline.py): synthetic examples for alignment, padding and a small BiLSTM training step.
+- [`src/validate_data.py`](src/validate_data.py): dataset structure validation.
+
+**Local smoke test (requires PyTorch and NumPy):**
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+The source modules and tests have been added, but the entire test suite has **not yet been executed and verified in a fresh environment**. The DistilBERT training pipeline and a complete command-line experiment runner are still pending. Do not use the saved results as evidence of a successful reproduction.
+
 ## Reproducing the experiment
 
 **In progress.** The original notebook has been audited and needs several corrections before it can be reliably run in a fresh environment, including explicit device configuration, deterministic seeds, consistent CPU/GPU handling, dependency versions, and an undefined plotting reference.
