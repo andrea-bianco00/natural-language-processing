@@ -9,7 +9,7 @@ Developed as an individual academic project for *Machine Learning for Natural La
 
 ## Research question
 
-Both models predict an IOB tag for each word, but they represent language differently:
+Both models predict BIO labels on tokenized text, but they represent language differently:
 
 - **BiLSTM** learns contextual representations through a recurrent architecture.
 - **DistilBERT** starts from pretrained Transformer representations and is adapted to NER.
@@ -22,7 +22,9 @@ The central question is whether pretrained contextual representations improve **
 2. **Preprocessing:** map IOB tags to IDs; build token sequences and batches. For DistilBERT, align word-level labels with subword tokens.
 3. **Modeling:** train a BiLSTM tagger and fine-tune DistilBERT for token classification.
 4. **Evaluation:** compare token accuracy and entity-level precision, recall, and F1. Entity-level metrics are especially important because a predicted entity must have the correct boundaries and type.
-5. **Analysis:** examine differences across entity categories and prediction errors.
+5. **Analysis:** compare recorded aggregate metrics, document methodological differences and limitations. Per-category error analysis is not available from the aggregate JSON files.
+
+For a concise interpretation of the new full-dataset metrics, see **[Results and limitations](results/README.md)**. Automated checks run in [GitHub Actions](https://github.com/andrea-bianco00/natural-language-processing/actions); these checks do not rerun full training.
 
 ## Results from the original notebook
 
