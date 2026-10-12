@@ -71,17 +71,17 @@ The original notebook has been split into focused Python modules:
 - [`tests/test_pipeline.py`](tests/test_pipeline.py): synthetic examples for alignment, padding and a small BiLSTM training step.
 - [`src/validate_data.py`](src/validate_data.py): dataset structure validation.
 
-**Local smoke test (requires PyTorch and NumPy):**
+**Local automated tests (requires PyTorch and NumPy; seqeval for metric tests):**
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-The source modules and tests have been added, but the entire test suite has **not yet been executed and verified in a fresh environment**. The DistilBERT training pipeline and a complete command-line experiment runner are still pending. Do not use the saved results as evidence of a successful reproduction.
+The earlier Colab session reported 13 passing tests. Additional methodology tests have since been added, but the expanded suite has **not yet been independently verified in a fresh environment**. The complete command-line runner is present and has produced the recorded Colab artifacts; the notebook revision still needs its own end-to-end rerun.
 
 ## Running the extracted experiment
 
-The command-line runner is now available, but **full end-to-end training has not yet been verified**. It requires an authorized copy of CoNLL-2003 and downloads pretrained tokenizer/encoder files from Hugging Face.
+The command-line runner is available, and full-dataset Colab artifacts are recorded; a separate clean-environment rerun has not yet been verified. It requires an authorized copy of CoNLL-2003 and downloads pretrained tokenizer/encoder files from Hugging Face.
 
 From the repository root, with Python 3.10 or 3.11:
 
@@ -99,13 +99,11 @@ python run_experiment.py --model distilbert --data data/raw/conll03-iob-pos.json
 
 The two commands write JSON results to `outputs/`, which is excluded from version control. The default training configuration mirrors the original notebook (BiLSTM: 10 epochs, AdamW 5e-4; DistilBERT: 3 epochs, AdamW 1e-5; batch size 32). The added seed is a reproducibility improvement, so new results may differ from the notebook's saved results.
 
-**Known limitations:** dependency versions are provisional; full training and pretrained-model downloads have not been tested in this environment. This runner does not yet implement resume/checkpoint support or fully deterministic GPU execution.
+**Known limitations:** dependency versions are provisional; pretrained-model downloads and full training have not been independently retested in a separate clean environment. This runner does not yet implement resume/checkpoint support or fully deterministic GPU execution.
 
-## Reproducing the experiment
+## Google Colab notebook
 
-**In progress.** The original notebook has been audited and needs several corrections before it can be reliably run in a fresh environment, including explicit device configuration, deterministic seeds, consistent CPU/GPU handling, dependency versions, and an undefined plotting reference.
-
-I am separating the project-specific code from course exercises, preserving the original experimental logic, and adding tests and setup instructions. **There is not yet a verified one-command reproduction workflow.**
+The cleaned [Colab reproduction notebook](notebooks/ENSAI_NER_Colab_Reproduction.ipynb) runs the repository's existing Python modules instead of copying model and evaluation logic into notebook cells. It has no embedded training outputs or restricted data. A current repository ZIP and an authorized original `Project.zip` are required for a rerun. The notebook structure was checked, but its newly committed revision has **not** been independently executed end-to-end; the recorded full-dataset runs are documented separately in `results/`.
 
 ## Limitations
 
