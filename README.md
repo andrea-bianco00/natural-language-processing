@@ -14,7 +14,7 @@ Both models predict BIO labels on tokenized text, but they represent language di
 - **BiLSTM** learns contextual representations through a recurrent architecture.
 - **DistilBERT** starts from pretrained Transformer representations and is adapted to NER.
 
-The central question is whether pretrained contextual representations improve **entity-level recognition**, rather than merely increasing token-level accuracy.
+The central question is whether pretrained contextual representations improve **entity-level recognition**, rather than merely increasing token-level accuracy. In this repository, entity-level metrics follow the original notebook's subword-expanded BIO protocol, not canonical word-level CoNLL scoring.
 
 ## Approach
 
@@ -85,7 +85,7 @@ The GitHub Actions workflow runs offline unit tests, Python compilation, and not
 
 The command-line runner is available, and full-dataset Colab artifacts are recorded; a separate clean-environment rerun has not yet been verified. It requires an authorized copy of CoNLL-2003 and downloads pretrained tokenizer/encoder files from Hugging Face.
 
-From the repository root, with Python 3.10 or 3.11:
+From the repository root, preferably with Python 3.11 (the recorded Colab run used Python 3.13; package compatibility may vary):
 
 ```bash
 python -m venv .venv
@@ -120,7 +120,7 @@ Python · PyTorch · Hugging Face Transformers · sequence labeling · entity-le
 
 ## Project provenance
 
-**Author:** Andrea Bianco. This work originated in an ENSAI NLP course. The original notebook notes the use of AI assistance and course reference materials. This repository will contain a cleaned presentation of the project, with reused course material separated or attributed as appropriate.
+**Author:** Andrea Bianco. This work originated in an ENSAI NLP course. The original notebook notes the use of AI assistance and course reference materials. This repository presents the project through extracted source modules, aggregate experiment evidence, tests, and methodological documentation. Any reused course material should remain appropriately attributed.
 
 ---
 
